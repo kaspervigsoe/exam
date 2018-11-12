@@ -96,6 +96,7 @@ public class UserController {
 
   public static User createUser(User user) {
 
+    //hashing initialiseres
     Hashing hashing = new Hashing();
 
     // Write in log that we've reach this step

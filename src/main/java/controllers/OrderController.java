@@ -3,6 +3,8 @@ package controllers;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+
+import cache.OrderCache;
 import model.Address;
 import model.LineItem;
 import model.Order;
@@ -12,6 +14,7 @@ import utils.Log;
 public class OrderController {
 
   private static DatabaseController dbCon;
+  private static OrderCache orderCache;
 
   public OrderController() {
     dbCon = new DatabaseController();
@@ -22,6 +25,8 @@ public class OrderController {
     // check for connection
     if (dbCon == null) {
       dbCon = new DatabaseController();
+      //OrderCache bruges
+      orderCache = new OrderCache();
     }
 
     // Build SQL string to query

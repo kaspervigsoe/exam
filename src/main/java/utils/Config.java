@@ -21,6 +21,7 @@ public final class Config {
   private static String SOLR_CORE;
   private static long PRODUCT_TTL;
   private static String SALT;
+  private static long ORDER_TTL;
 
   public static long getProductTtl() {
     return PRODUCT_TTL;
@@ -68,6 +69,8 @@ public final class Config {
 
   public static String getSALT() {return SALT;}
 
+  public static long getOrderTtl() {return ORDER_TTL;}
+
   public static void initializeConfig() throws IOException {
 
     // Init variables to parse JSON
@@ -102,6 +105,9 @@ public final class Config {
     SOLR_PATH = json.get("SOLR_PATH").toString().replace("\"", "");
     SOLR_CORE = json.get("SOLR_CORE").toString().replace("\"", "");
     PRODUCT_TTL = json.get("PRODUCT_TTL").getAsLong();
+
+    //tilføjet af mig
     SALT = json.get("SALT").getAsString();
+    ORDER_TTL = json.get("ORDER_TTL").getAsLong();
   }
 }
