@@ -3,6 +3,8 @@ package controllers;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+
+import cache.UserCache;
 import model.User;
 import utils.Hashing;
 import utils.Log;
@@ -10,6 +12,7 @@ import utils.Log;
 public class UserController {
 
   private static DatabaseController dbCon;
+  private static UserCache userCache;
 
   public UserController() {
     dbCon = new DatabaseController();
@@ -20,6 +23,7 @@ public class UserController {
     // Check for connection
     if (dbCon == null) {
       dbCon = new DatabaseController();
+      userCache = new UserCache();
     }
 
     // Build the query for DB
