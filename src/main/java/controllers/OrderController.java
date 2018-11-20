@@ -14,7 +14,6 @@ import utils.Log;
 public class OrderController {
 
   private static DatabaseController dbCon;
-  private static OrderCache orderCache;
 
   public OrderController() {
     dbCon = new DatabaseController();
@@ -25,8 +24,6 @@ public class OrderController {
     // check for connection
     if (dbCon == null) {
       dbCon = new DatabaseController();
-      //OrderCache bruges
-      orderCache = new OrderCache();
     }
 
     // Build SQL string to query
@@ -81,7 +78,7 @@ public class OrderController {
       dbCon = new DatabaseController();
     }
 
-    String sql = "SELECT * FROM order";
+    String sql = "SELECT * FROM orders";
 
     ResultSet rs = dbCon.query(sql);
     ArrayList<Order> orders = new ArrayList<Order>();
