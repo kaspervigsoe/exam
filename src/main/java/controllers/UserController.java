@@ -146,7 +146,7 @@ public class UserController {
     return user;
   }
 
-  public String loginUser(User user){
+  public static String loginUser(User user){
     if (dbCon == null){
       dbCon = new DatabaseController();
     }
