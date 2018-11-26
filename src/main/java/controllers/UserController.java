@@ -208,6 +208,29 @@ public class UserController {
     return user;
   }
 
+  public static User update (User user){
+
+    if (dbCon == null){
+      dbCon = new DatabaseController();
+    }
+
+    try {
+      PreparedStatement updateUser = dbCon.getConnection().prepareStatement("UPDATE user SET first_name = ?, last_name = ?, password = ?, email = ? WHERE id = ?");
+
+      updateUser.setString(1, user.getFirstname());
+      updateUser.setString(2, user.getLastname());
+      updateUser.setString(3, user.getPassword());
+      updateUser.setString(4, user.getEmail());
+      updateUser.setInt(5, user.getId());
+
+      updateUser.executeUpdate();
+    } catch (SQLException exception){
+      exception.printStackTrace();
+    }
+    return user;
+  }
+
+
   public static String getTokenVerifier (User user){
 
     if (dbCon == null){

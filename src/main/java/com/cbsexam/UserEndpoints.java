@@ -111,7 +111,7 @@ public class UserEndpoints {
 
   }
 
-  // TODO: Make the system able to delete users
+  // TODO: Make the system able to delete users : FIXED
 
   @POST
   @Path("/delete")
@@ -133,10 +133,23 @@ public class UserEndpoints {
     // Return a response with status 200 and JSON as type
   }
 
-  // TODO: Make the system able to update users
-  public Response updateUser(String x) {
+  // TODO: Make the system able to update users : FIXED
+  @POST
+  @Path("/update")
+  @Consumes (MediaType.APPLICATION_JSON)
+
+  public Response updateUser(String body) {
+
+    User user = new Gson().fromJson(body, User.class);
+    String token = UserController.getTokenVerifier(user);
+
+    if (token != "") {
+      UserController.update(user);
+      return Response.status(200).type(MediaType.APPLICATION_JSON_TYPE).entity("The user has been updated").build();
+
+    } else
 
     // Return a response with status 200 and JSON as type
-    return Response.status(400).entity("Endpoint not implemented yet").build();
+    return Response.status(400).entity("Aww... something went wrong").build();
   }
 }
