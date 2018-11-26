@@ -112,10 +112,25 @@ public class UserEndpoints {
   }
 
   // TODO: Make the system able to delete users
-  public Response deleteUser(String x) {
 
+  @POST
+  @Path("/delete")
+  @Consumes(MediaType.APPLICATION_JSON)
+
+  public Response deleteUser(String body) {
+
+    User user = new Gson().fromJson(body, User.class);
+
+    String token = UserController.getTokenVerifier(user);
+
+    if (token != null){
+      UserController.deleteUser(user);
+
+      return Response.status(200).type(MediaType.APPLICATION_JSON_TYPE).entity("The user has been deleted").build();
+    } else
+
+      return Response.status(400).entity("Aww... something went wrong").build();
     // Return a response with status 200 and JSON as type
-    return Response.status(400).entity("Endpoint not implemented yet").build();
   }
 
   // TODO: Make the system able to update users
