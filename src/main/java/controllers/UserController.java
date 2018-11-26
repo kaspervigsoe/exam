@@ -146,14 +146,12 @@ public class UserController {
     return user;
   }
 
-  public static String loginUser(User user){
+  public String loginUser(User user){
     if (dbCon == null){
       dbCon = new DatabaseController();
     }
 
     String sql = "SELECT * FROM user where email='" + user.getEmail() + "'AND password ='" + user.getPassword() + "'";
-
-    dbCon.loginUser(sql);
 
     ResultSet resultSet = dbCon.query(sql);
     User userlogin;
@@ -167,7 +165,7 @@ public class UserController {
                 resultSet.getString("last_name"),
                 resultSet.getString("password"),
                 resultSet.getString("email"));
-        if (userlogin != null){
+        {
           try {
             Algorithm algorithm = Algorithm.HMAC256("secret");
             token = JWT.create()
@@ -179,14 +177,14 @@ public class UserController {
           } finally {
             return token;
           }
-        } else {
-          System.out.println("No user found");
         }
+      } else {
+        System.out.println("No user found");
       }
     } catch (SQLException ex){
       System.out.println(ex.getMessage());
     }
 
-    return "";
+    return null;
   }
 }
