@@ -21,7 +21,6 @@ import utils.Log;
 public class UserController {
 
   private static DatabaseController dbCon;
-  private static UserCache userCache;
 
   public UserController() {
     dbCon = new DatabaseController();
@@ -32,7 +31,6 @@ public class UserController {
     // Check for connection
     if (dbCon == null) {
       dbCon = new DatabaseController();
-      userCache = new UserCache();
     }
 
     // Build the query for DB
@@ -123,6 +121,8 @@ public class UserController {
       dbCon = new DatabaseController();
     }
 
+    Hashing hasing = new Hashing();
+
     // Insert the user in the DB
     // TODO: Hash the user password before saving it : FIXED
     int userID = dbCon.insert(
@@ -132,7 +132,7 @@ public class UserController {
             + user.getLastname()
             + "', '"
             //hashing metoden bruges inden password hentes
-            + hashing.HashWithSalt(user.getPassword())
+            + hashing.sha(user.getPassword())
             + "', '"
             + user.getEmail()
             + "', "
@@ -156,7 +156,7 @@ public class UserController {
       dbCon = new DatabaseController();
     }
 
-    String sql = "SELECT * FROM user where email='" + user.getEmail() + "'AND password ='" + user.getPassword() + "'";
+    String sql = "SELECT * FROM user where email='" + user.getEmail() + "'AND password ='" + Hashing.sha(user.getPassword()) + "'";
 
     ResultSet resultSet = dbCon.query(sql);
     User userlogin;

@@ -19,10 +19,11 @@ public final class Config {
   private static int SOLR_PORT;
   private static String SOLR_PATH;
   private static String SOLR_CORE;
+  //defineres som en long da vi vil sikre tallet kan være stort nok
   private static long PRODUCT_TTL;
-  private static String SALT;
   private static long ORDER_TTL;
   private static long USER_TTL;
+  private static String SALT;
   private static String ENCRYPTION_KEY;
 
   public static long getProductTtl() {

@@ -58,7 +58,7 @@ public class User {
     this.password = password;
   }
 
-  public long getCreatedTime() {
+  public static long getCreatedTime() {
     return createdTime;
   }
 

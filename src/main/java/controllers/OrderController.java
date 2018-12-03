@@ -179,7 +179,7 @@ public class OrderController {
 
       order.setLineItems(items);
 
-      //if the below has been run through, then it commits
+      //if the above has been run through, then it commits
       connection.commit();
     } catch (SQLException e){
       try{

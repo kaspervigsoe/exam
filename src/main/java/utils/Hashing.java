@@ -3,6 +3,8 @@ package utils;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+
+import model.User;
 import org.bouncycastle.util.encoders.Hex;
 
 public final class Hashing {
@@ -40,11 +42,18 @@ public final class Hashing {
     return null;
   }
 
-  // TODO: You should add a salt and make this secure
+  // TODO: You should add a salt and make this secure : FIXED
+  //fx password = 1234
   public static String sha(String rawString) {
     try {
       // We load the hashing algoritm we wish to use.
       MessageDigest digest = MessageDigest.getInstance("SHA-256");
+
+      //Makes it more secure by saving it in config
+      String salt = Config.getSALT();
+
+      //fx : 1234 + 3452349581  + salt = "new" password
+      rawString = rawString + User.getCreatedTime() + salt;
 
       // We convert to byte array
       byte[] hash = digest.digest(rawString.getBytes(StandardCharsets.UTF_8));
@@ -61,11 +70,4 @@ public final class Hashing {
 
     return rawString;
   }
-
-  //jeg har tilføjet et salt i slutningen af mit hash
-  public String HashWithSalt (String saltedHash){
-    String salt = saltedHash+this.salt;
-    return md5(salt);
-  }
-
 }
