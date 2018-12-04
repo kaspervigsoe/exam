@@ -49,7 +49,8 @@ public class UserController {
                 rs.getString("first_name"),
                 rs.getString("last_name"),
                 rs.getString("password"),
-                rs.getString("email"));
+                rs.getString("email"),
+                rs.getLong("created_at"));
 
         // return the create object
         return user;
@@ -92,7 +93,8 @@ public class UserController {
                 rs.getString("first_name"),
                 rs.getString("last_name"),
                 rs.getString("password"),
-                rs.getString("email"));
+                rs.getString("email"),
+                rs.getLong("created_at"));
 
         // Add element to list
         users.add(user);
@@ -169,7 +171,8 @@ public class UserController {
                 resultSet.getString("first_name"),
                 resultSet.getString("last_name"),
                 resultSet.getString("password"),
-                resultSet.getString("email"));
+                resultSet.getString("email"),
+                resultSet.getLong("created_at"));
         {
           try {
             Algorithm algorithm = Algorithm.HMAC256("secret");
