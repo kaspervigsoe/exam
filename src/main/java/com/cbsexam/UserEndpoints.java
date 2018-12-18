@@ -63,7 +63,7 @@ public class UserEndpoints {
   }
 
   @POST
-  @Path("/")
+  @Path("/create")
   @Consumes(MediaType.APPLICATION_JSON)
   public Response createUser(String body) {
 
@@ -112,20 +112,19 @@ public class UserEndpoints {
   @DELETE
   @Path("/delete")
   @Consumes(MediaType.APPLICATION_JSON)
-
   public Response deleteUser(String body) {
 
     User user = new Gson().fromJson(body, User.class);
 
     String token = UserController.getTokenVerifier(user);
 
-    if (token != null){
+   if (token != null){
       UserController.deleteUser(user);
 
       return Response.status(200).type(MediaType.APPLICATION_JSON_TYPE).entity("The user has been deleted").build();
-    } else
+  } else
 
-      return Response.status(400).entity("Aww... something went wrong").build();
+    return Response.status(400).entity("").build();
     // Return a response with status 200 and JSON as type
   }
 
