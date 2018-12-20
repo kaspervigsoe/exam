@@ -14,7 +14,14 @@ import utils.Log;
 @Path("user")
 public class UserEndpoints {
 
-  UserCache userCache = new UserCache();
+  private static UserCache userCache;
+  private static UserController userController;
+
+  public UserEndpoints(){
+    this.userCache = new UserCache();
+    this.userController = new UserController();
+  }
+
 
 
   /**
@@ -42,7 +49,9 @@ public class UserEndpoints {
     }
   }
 
-  /** @return Responses */
+  /**
+   * @return Responses
+   */
   @GET
   @Path("/")
   public Response getUsers() {
@@ -93,19 +102,25 @@ public class UserEndpoints {
 
     User user = new Gson().fromJson(body, User.class);
 
-    String token = UserController.loginUser(user);
+    String token = userController.loginUser(user);
 
-    if (token != "") {
+    try {
 
-      return
-              Response.status(200).type(MediaType.APPLICATION_JSON_TYPE).entity(token).build();
-    }else{
-      // Return a response with status 200 and JSON as type
-      return Response.status(400).entity("Aww, sad... User could not be created").build();
+      if (token != null) {
+
+        return Response.status(200).type(MediaType.APPLICATION_JSON_TYPE).entity(token).build();
+      } else {
+        // Return a response with status 200 and JSON as type
+        return Response.status(400).entity("Could not login").build();
+      }
+    } catch (Exception e) {
+      System.out.println(e.getMessage());
     }
-
-
+    return null;
   }
+
+
+
 
   // TODO: Make the system able to delete users : FIXED
 
@@ -124,7 +139,7 @@ public class UserEndpoints {
       return Response.status(200).type(MediaType.APPLICATION_JSON_TYPE).entity("The user has been deleted").build();
   } else
 
-    return Response.status(400).entity("").build();
+    return Response.status(400).entity("could not delete").build();
     // Return a response with status 200 and JSON as type
   }
 

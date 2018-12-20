@@ -123,8 +123,6 @@ public class UserController {
       dbCon = new DatabaseController();
     }
 
-    Hashing hasing = new Hashing();
-
     // Insert the user in the DB
     // TODO: Hash the user password before saving it : FIXED
     int userID = dbCon.insert(
@@ -161,12 +159,12 @@ public class UserController {
     String sql = "SELECT * FROM user where email='" + user.getEmail() + "'AND password ='" + Hashing.sha(user.getPassword()) + "'";
 
     ResultSet resultSet = dbCon.query(sql);
-    User userlogin;
+    User userLogin;
     String token = null;
 
     try{
       if (resultSet.next()){
-        userlogin = new User (
+        userLogin = new User (
                 resultSet.getInt("ID"),
                 resultSet.getString("first_name"),
                 resultSet.getString("last_name"),
@@ -177,15 +175,12 @@ public class UserController {
           try {
             Algorithm algorithm = Algorithm.HMAC256("secret");
             token = JWT.create()
-                    .withClaim("userid", userlogin.getId())
+                    .withClaim("userid", userLogin.getId())
                     .withIssuer("auth0")
                     .sign(algorithm);
           } catch (JWTCreationException exception){
-            System.out.println(exception.getMessage());
-          } finally {
-            return token;
-          }
-        }
+            }
+        }  return token;
       } else {
         System.out.println("No user found");
       }
@@ -248,7 +243,7 @@ public class UserController {
       DecodedJWT jwt = verifier.verify(token);
       Claim claim = jwt.getClaim("userId");
 
-      if (user.getId() == claim.asInt()){
+      if (user.getId() == claim.asInt()) {
         return token;
       }
 

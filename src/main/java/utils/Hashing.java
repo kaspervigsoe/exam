@@ -12,7 +12,7 @@ public final class Hashing {
   //her oprettes salt variablen, og værdien hentes i ressources
   private String salt = Config.getSALT();
 
-  // TODO: You should add a salt and make this secure : FIXED
+  // TODO: You should add a salt and make this secure : FIXED, nevermind, didn't use this one anyway
   public static String md5(String rawString) {
     try {
 
